@@ -129,8 +129,8 @@
   \textbf{Your Title} \\*[0.5\baselineskip]
   \normalsize
 \begin{tabular}{r@{:\quad}lr}
-          PI & A Person       & A Place       \\
-        Co-I & Another Person & Another Place
+          PI & Michael Gully-Santiago       & Bay Area Environmental Research Institute       \\
+        Co-I & Joeseph Lin & MIT Lincoln Laboratory
 \end{tabular}
   \endgroup
 \end{center}
@@ -162,18 +162,10 @@
 
 2.3.3 Proposal Summary (abstract)
 
-Both electronic submittal systems require the PI to prepare a Proposal
-Summary. The Proposal Summary should provide an overview of the
-proposed investigation that is suitable for release through a publicly
-accessible archive should the proposal be selected. The proposal
-summary (or abstract) should be concise, should not exceed 4000
-characters in length, and should not contain any special characters or
-formatting. Note that, while Grants.gov does not impose a limit on the
-length of the proposal summary, it will be truncated when the proposal
-is transmitted from Grants.gov to NASA. Grants.gov users must use a
-writeable pdf form (downloadable from grants.gov) named
-ProposalSummary.pdf. This form restricts the Proposal Summary document
-to 4000 characters or less.
+We propose development of a near-infrared spectrograph concept devoted to exoplanet transit spectroscopy of bright exoplanet host stars.  The compact design of this spectrograph will fit inside of a low-cost cubesat platform, dramatically lowering the overall instrument cost. The device development for this concept must occur now in order to be ready for discoveries from present and future transiting exoplanet discovery missions (K2/TESS).
+
+We will develop two key enabling technologies of our instrument concept.  First, we will develop custom cross-dispersed silicon immersed diffractive grisms to achieve both high spectral grasp, and a small overall instrument volume amenable to a cubesat platform.  Our team has considerable expertise in developing silicon immersion grating technology.  Second, we will develop intra-pixel sensitivity characterization of near-IR detectors.  Intra-pixel sensitivity characterization provides resilience to spacecraft-induced thermal instabilities, which lead to the dominant noise sources in both Kepler/K2 and likely for TESS as well.  The dearth of lab-measured sub-pixel detector characterization currently limits many science cases in K2 data, for example.  Through the APRA program, we will develop lab-based metrology techniques and concepts for in-situ, space-based calibration systems.  Through these device development and metrology efforts, we will enable hundreds of parts per million transit spectroscopy on the sample of bright, TESS-discovered planets.
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -191,50 +183,9 @@ to 4000 characters or less.
 
 2.3.6 Scientific/Technical/Management Section
 
-As the main body of the proposal, this section must cover the
-following topics all within the specified page limit. Unless specified
-otherwise in the FA, the limit is 15 pages using the default values
-given in Section 2.3.1:
+\section{Objectives and expected significance of the proposed research}
+Especially as related to the objectives given in the FA;
 
-- The objectives and expected significance of the proposed research,
-  especially as related to the objectives given in the FA;
-
-- The technical approach and methodology to be employed in conducting
-  the proposed research, including a description of any hardware
-  proposed to be built in order to carry out the research, as well as
-  any special facilities of the proposing organization(s) and/or
-  capabilities of the proposer(s) that would be used for carrying out
-  the work. (Note: ref. also Section 2.3.10(a) concerning the
-  description of critical existing equipment needed for carrying out
-  the proposed research and the Instructions for the Budget
-  Justification in Section 2.3.10 for further discussion of costing
-  details needed for proposals involving significant hardware,
-  software, and/or ground systems development, and, as may be allowed
-  by an FA, proposals for flight instruments);
-
-- The perceived impact of the proposed work to the state of knowledge
-  in the field and, if the proposal is offered as a direct successor
-  to an existing NASA award, how the proposed work is expected to
-  build on and otherwise extend previous accomplishments supported by
-  NASA;
-
-- The relevance of the proposed work to past, present, and/or future
-  NASA programs and interests or to the specific objectives given in
-  the FA;
-
-- A general plan of work, including anticipated key milestones for
-  accomplishments, the management structure for the proposal
-  personnel, any substantial collaboration(s) and/or use of
-  consultant(s) that is(are) proposed to complete the investigation;
-  and a description of the expected contribution to the proposed
-  effort by the PI and each person as identified in one of the
-  additional categories in Section 1.4.2, regardless of whether or not
-  they derive support from the proposed budget.
-
-- To facilitate data sharing where appropriate, as part of their
-  technical proposal, the proposer shall provide a data-sharing plan
-  and shall provide evidence (if any) of any past data- sharing
-  practices.
 
 The Scientific/Technical/Management Section may contain illustrations
 and figures that amplify and demonstrate key points of the proposal
@@ -262,6 +213,30 @@ proposals involving significant hardware, software, and/or ground
 systems development, and, as may be allowed by an FA, proposals for
 flight instruments);
 
+\section{Impact}
+
+
+The perceived impact of the proposed work to the state of knowledge
+in the field and, if the proposal is offered as a direct successor
+to an existing NASA award, how the proposed work is expected to
+build on and otherwise extend previous accomplishments supported by
+NASA;
+
+The relevance of the proposed work to past, present, and/or future
+NASA programs and interests or to the specific objectives given in
+the FA;
+
+\section{Plan of work}
+
+A general plan of work, including anticipated key milestones for
+  accomplishments, the management structure for the proposal
+  personnel, any substantial collaboration(s) and/or use of
+  consultant(s) that is(are) proposed to complete the investigation;
+  and a description of the expected contribution to the proposed
+  effort by the PI and each person as identified in one of the
+  additional categories in Section 1.4.2, regardless of whether or not
+  they derive support from the proposed budget.
+
 
 \section{Management Plan}
 \label{sec:management}
@@ -274,6 +249,8 @@ the expected contribution to the proposed effort by the PI and each
 person as identified in one of the additional categories in Section
 1.4.2, regardless of whether or not they derive support from the
 proposed budget.
+
+
 
 
 \section{Perceived Impact and Relevance to the NASA Science Mission Directorate}
@@ -299,11 +276,12 @@ FA;
 \section*{Data Management Plan}
 \addcontentsline{toc}{section}{Data Management Plan}
 %%
-To facilitate data sharing where appropriate, as part of their
-technical proposal, the proposer shall provide a data-sharing plan and
-shall provide evidence (if any) of any past data- sharing practices.
 
-4000 characters.
+
+Our team practices open source software and data sharing best practices.  Most of our data analysis software development occurs in the open on the code sharing website GitHub.  The permissive MIT licenses allow all code and data to be reused freely for any application, including commercial.  In some cases, code and materials are developed in private for quality assurance, licensing, or export control purposes.  In these rare cases, we continue to adopt distributed version control systems (\emph{i.e.} \texttt{git}), and plan curated open sources releases at a later date when content quality, licensing, and export control can be addressed.
+
+We carry out research and development data management best practices with conventional backups on external disks, RAID, and cloud services where appropriate and allowed by the nature of the content.  Scientific data of broader appeal will be made available publicly, and could be made available via popular long-lifetime storage solutions like the Mikulski Archive for Space Telescopes (MAST) if the scientific value was deemed worthy.  Commercial storage options like Amazon Web Services (AWS), Google Cloud Platform (GCP), and others could be pursued for their ease of low-cost computation, and seamless interface.
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
