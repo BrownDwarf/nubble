@@ -15,3 +15,5 @@ all: ms.pdf
 	rm -rf *.blg
 	rm -rf *.iyt
 	rm -rf *.dvi
+	rm -rf *.toc
+	rm -rf *.out
