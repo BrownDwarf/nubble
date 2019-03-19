@@ -15,6 +15,7 @@ parser = argparse.ArgumentParser(prog="star_planet_spot.py", description="Run St
 parser.add_argument("--samples", type=int, default=5, help="How many samples to run?")
 parser.add_argument("--incremental_save", type=int, default=100, help="How often to save incremental progress of MCMC samples.")
 parser.add_argument("--resume", action="store_true", help="Continue from the last sample. If this is left off, the chain will start from your initial guess specified in config.yaml.")
+parser.add_argument("--plot", action="store_true", help="Don't sample, just plot the config parameters")
 args = parser.parse_args()
 
 import os
@@ -107,10 +108,12 @@ class Order(OrderBase):
             raise
 
         try:
-            model1 = self.Omega * self.flux_scalar *(self.chebyshevSpectrum.k * self.flux_mean + X.dot(self.mus))
-            model2 = self.Omega2 * self.flux_scalar2 * (self.chebyshevSpectrum.k * self.flux_mean + X.dot(self.mus2))
-            model3 = (self.flux_scalar3 * (self.flux_mean + X2.dot(self.mus3)) / (696000.0 * 0.2064) )**2 #hard code GJ1214b radius!
-            net_model = model1 * model3 + model2
+            #hard code distance to GJ1214!
+            planet_solid_angle = 2.0*np.pi*(self.flux_scalar3 * (self.flux_mean2 + X2.dot(self.mus3)) /  4.5051e14)**2
+            model1 = self.flux_scalar *(self.chebyshevSpectrum.k * self.flux_mean + X.dot(self.mus))
+            model2 = self.flux_scalar2 * (self.chebyshevSpectrum.k * self.flux_mean + X.dot(self.mus2))
+
+            net_model = (self.Omega - planet_solid_angle)*model1 + self.Omega2 * model2
             R = self.fl - net_model
 
             logdet = np.sum(2 * np.log((np.diag(factor))))
@@ -143,6 +146,38 @@ class Order(OrderBase):
         self.mus3, self.C_GP3 = self.emulator2.matrix
         self.flux_scalar3 = self.emulator2.absolute_flux
         gc.collect()
+
+    def draw_save(self):
+        '''
+        Return the lnprob using the current version of the C_GP matrix, data matrix,
+        and other intermediate products.
+        '''
+
+        self.lnprob_last = self.lnprob
+
+        X = (self.chebyshevSpectrum.k * self.flux_std * np.eye(self.ndata)).dot(self.eigenspectra.T)
+        X2 = (self.flux_std2 * self.eigenspectra2).T
+
+        part1 = self.Omega**2 * self.flux_scalar**2 * X.dot(self.C_GP.dot(X.T))
+        part2 = self.Omega2**2 * self.flux_scalar2**2 * X.dot(self.C_GP2.dot(X.T))
+        part3 = self.data_mat
+
+        #CC = X.dot(self.C_GP.dot(X.T)) + self.data_mat
+        CC = part1 + part2 + part3
+
+        planet_solid_angle = 2.0*np.pi*(self.flux_scalar3 * (self.flux_mean2 + X2.dot(self.mus3)) /  4.5051e14)**2
+        model1 = self.flux_scalar *(self.chebyshevSpectrum.k * self.flux_mean + X.dot(self.mus))
+        model2 = self.flux_scalar2 * (self.chebyshevSpectrum.k * self.flux_mean + X.dot(self.mus2))
+
+        model_out = (self.Omega - planet_solid_angle)*model1 + self.Omega2 * model2
+        if np.log10(self.Omega) > -30:
+            np.save('model1.npy', model1)
+            np.save('planet_solid_angle.npy', planet_solid_angle)
+            np.save('Omega.npy', self.Omega)
+        if np.log10(self.Omega2) > -30:
+            np.save('model2.npy', model2)
+            np.save('Omega2.npy', self.Omega2)
+        return model_out
 
 class SampleThetaPhi(Order, SampleThetaPhiBase):
     pass #put custom behavior here
@@ -192,6 +227,19 @@ def lnprob(p):
         return -np.inf
     return lp + lnlike(p)
 
+def lnprob_all(p):
+    '''Return a model draw with the input parameters'''
+    pars1 = ThetaParam(grid=p[0:3], grid2=p[14:], vz=p[3], vsini=p[4], logOmega=p[5], teff2=p[6], logOmega2=p[7])
+    model.update_Theta(pars1)
+    # hard code npoly=3 (for fixc0 = True with npoly=4)
+    #pars2 = PhiParam(0, 0, True, p[6:9], p[9], p[10], p[11])
+    pars2 = PhiParam(0, 0, True, p[8:11], p[11], p[12], p[13])
+    model.update_Phi(pars2)
+    junk = model.evaluate()
+    draw = model.draw_save()
+    return draw
+
+
 import emcee
 
 start = Starfish.config["Theta"]
@@ -204,6 +252,39 @@ p0 = np.array(start["grid"] + [start["vz"], start["vsini"], start["logOmega"], s
              phi0.cheb.tolist() + [phi0.sigAmp, phi0.logAmp, phi0.l] + start["grid2"])
 
 p0_std = [5, 0.02, 0.005, 0.5, 0.5, 0.01, 5, 0.01, 0.005, 0.005, 0.005, 0.01, 0.001, 0.5, 5, 0.05]
+
+if args.plot:
+    wl = model.wl
+    data = model.fl
+    import pandas as pd
+    import json
+
+    df_out = pd.DataFrame({'wl':wl, 'data':data})
+
+    with open('s0_o0phi.json') as f:
+        s0phi = json.load(f)
+
+    psl = (Starfish.config['Theta']['grid']+
+      [Starfish.config['Theta'][key] for key in ['vz', 'vsini', 'logOmega', 'teff2', 'logOmega2']] +
+      s0phi['cheb'] +
+      [s0phi['sigAmp']] + [s0phi['logAmp']] + [s0phi['l']]+
+      Starfish.config['Theta']['grid2'])
+
+    ps = np.array(psl)
+    df_out['model_composite'] = lnprob_all(ps)
+
+    pset2 = ps.copy()
+    pset2[7] = -35.0
+    df_out['model_hot50'] = lnprob_all(pset2)
+    pset1 = ps.copy()
+    pset1[5] = -35.0
+    df_out['model_cool50'] = lnprob_all(pset1)
+
+    df_out.to_csv('spec_config.csv', index=False)
+    import sys
+    print('Model complete, look for a file spec_config.csv to plot.  Exiting.')
+    sys.exit(0)
+
 
 if args.resume:
     try:

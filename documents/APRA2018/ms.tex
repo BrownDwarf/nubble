@@ -8,6 +8,7 @@
 \usepackage{xspace}
 \usepackage{paralist}
 \usepackage{amsmath}
+\usepackage{subcaption}
 \usepackage[dvipsnames]{xcolor}
 \usepackage[final]{pdfpages}
 
@@ -215,6 +216,25 @@ flight instruments);
 \end{quote}
 
 \subsection{Sensitivity demands for exoplanet transit spectroscopy}
+The most favorable transiting exoplanet GJ1214b produces an average transit depth of 1.4\%.  \citet{2015ApJ...815..110M} predicted the transit depth as a function of wavelength expected for a GJ1214b-like planetary transit.  Figure \ref{fig:Morley} shows an overview of the transit spectrum and a zoom on the $J-band$ region at the native resolution of the synthetic spectral models.  The transit spectrum shown in Figure \ref{fig:Morley} assumes 100$\times$ the stellar metallicity, with no clouds in the atmosphere.  The native standard deviation of the $J-$band spectrum is 700 parts per million.
+
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{../../figures/GJ1214b_wl_depth}
+        \caption{Panchromatic model}
+        \label{fig:GJ1214b_panchromatic}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{../../figures/GJ1214b_wl_depth_zoom}
+        \caption{$J-band$ region}
+        \label{fig:GJ1214b_zoom}
+    \end{subfigure}
+    \caption{The GJ1214b transit depth as a function of wavelength}\label{fig:Morley}
+\end{figure}
 
 \textbf{What are the brightest known transiting-planet host stars? What will TESS find?}
 
@@ -222,31 +242,31 @@ The top 20 candidates for exoplanet transit spectroscopy have recently been comp
 
 \begin{table}
  \centering
- \caption{The Best Confirmed Planets for Transmission Spectroscopy with R$_P$ $<$ 5$R_{\oplus}$ }
- \label{tbl:S/N}
- \begin{tabular}{ccc}
+ \caption{The Best Confirmed Planets for Transmission Spectroscopy with R$_P$ $<$ 5$R_{\oplus}$, and $J<8$, with GJ1214b for reference.  }
+ \label{tbl:StoN}
+ \begin{tabular}{cccc}
     \hline
     \hline
-    Planet & R$_P$($R_{\oplus}$) & S/N$^a$ \\
+    Planet & R$_P$($R_{\oplus}$) & S/N$^a$ &$J$ (mag) \\
     \hline
- GJ 1214 b  & 2.85$\pm$0.20 & 1.00 \\
- GJ 436 b  & 4.1697408 & 0.68 \\
- GJ 3470 b  & 3.88$\pm$0.33 & 0.48 \\
- HAT-P-11 b  & 4.73$\pm$0.26 & 0.46 \\
- 55 Cnc e  & 1.91$\pm$0.08 & 0.41 \\
- HD 97658 b  & 2.34$^{+0.17}_{-0.15}$ & 0.30 \\
- HD 3167 c & 2.85$^{+0.24}_{-0.15}$ & 0.26 \\
- HD 106315 c & $4.3_{-0.3}^{+0.2}$ & 0.22 \\
- K2-25 b  & 3.43$^{+0.95}_{-0.31}$ & 0.22 \\
- HIP 41378 d  & 3.96$\pm$0.59 & 0.1 \\
- HIP 41378 b  & 2.90$\pm$0.44 & 0.1 \\
- K2-32 d  & 3.76$\pm$0.40 & 0.13 \\
- K2-19 c  & 4.86$^{+0.62}_{-0.44}$ & 0.12 \\
- K2-28 b  & 2.32$\pm$0.24 & 0.1 \\
- K2-32 c  & 3.48$^{+0.98}_{-0.42}$ & 0.12 \\
- Kepler-105 b  & 4.81$\pm$1.5 & 0.11 \\
- Kepler-411 c  & 3.27$^{+0.12}_{-0.067}$ & 0.11 \\
- HD 106315 b & 2.5$\pm$0.1 & 0.10 \\
+ GJ 1214 b  & 2.85$\pm$0.20 & 1.00 & 9.75\\
+ GJ 436 b  & 4.1697408 & 0.68 & 6.9\\
+ %GJ 3470 b  & 3.88$\pm$0.33 & 0.48 & 8.8 \\
+ HAT-P-11 b  & 4.73$\pm$0.26 & 0.46 &7.6 \\
+ 55 Cnc e  & 1.91$\pm$0.08 & 0.41 & 4.59\\
+ HD 97658 b  & 2.34$^{+0.17}_{-0.15}$ & 0.30 & 6.2\\
+ HD 3167 c & 2.85$^{+0.24}_{-0.15}$ & 0.26 & 7.5\\
+ %HD 106315 c & $4.3_{-0.3}^{+0.2}$ & 0.22 & 8.1\\
+ %K2-25 b  & 3.43$^{+0.95}_{-0.31}$ & 0.22 & 11.3\\
+ HIP 41378 d  & 3.96$\pm$0.59 & 0.1 &7.9\\
+ HIP 41378 b  & 2.90$\pm$0.44 & 0.1 &7.9\\
+ %K2-32 d  & 3.76$\pm$0.40 & 0.13 & 10.4\\
+ %K2-19 c  & 4.86$^{+0.62}_{-0.44}$ & 0.12 &11.5 \\
+ %K2-28 b  & 2.32$\pm$0.24 & 0.1 & 11.7\\
+ %K2-32 c  & 3.48$^{+0.98}_{-0.42}$ & 0.12 & 10.4\\
+ %Kepler-105 b  & 4.81$\pm$1.5 & 0.11 & 11.8\\
+ %Kepler-411 c  & 3.27$^{+0.12}_{-0.067}$ & 0.11 & 10.6\\
+ %HD 106315 b & 2.5$\pm$0.1 & 0.10 & 8.6\\
    \hline
     \hline
  \end{tabular}
@@ -257,10 +277,16 @@ $^a$The predicted signal-to-noise ratios relative to GJ 1214 b.
 \end{flushleft}
 \end{table}
 
-
 \textbf{How small of a telescope can you measure such an exoplanet transit with?}
-- S/N versus telescope aperture for fixed J-mag
-- S/N versus J-mag for fixed telescope aperture
+
+A $D=\,7.5$ cm telescope, with spectral resolution $R=1000$, total efficiency $\epsilon=0.1$ and 30 electrons read noise would achieve a mere 3.6 $S/N$.  GJ1214b is out of reach.  However, much brighter targets remain accessible.  Table \ref{tbl:StoN} lists the best known transiting planet systems amenable to transit spectroscopy with a small telescope, benchmarked to GJ1214b.  TESS will discover many more such systems.  Figure \ref{fig:StoNj} shows the expected $S/N$ for a baseline $J-band$ spectrograph design.
+
+\begin{figure}
+    \centering
+        \includegraphics[width=0.5\textwidth]{../../figures/SN_vs_J}
+    \caption{The Expected signal-to-noise ratio for a $J-$band spectrograph}\label{fig:StoNj}
+\end{figure}
+
 
 \textbf{Why is transit spectroscopy so hard?}
 - The integrated solid angle of the planet atmosphere is generally much less than the star's disk, yielding low signal-to-noise ratio of the atmospheric signal.
